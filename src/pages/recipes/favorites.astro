@@ -1,0 +1,30 @@
+---
+export const partial = true;
+const favorites = [];
+let id;
+if (Astro.request.method == "POST") {
+    const data = await Astro.request.formData();
+    const recipe = {
+        title: data.get("title"),
+        image: data.get("image"),
+        description: data.get("description"),
+        preptime: data.get("preptime"),
+        cookTime: data.get("cooktime"),
+        servings: data.get("servings"),
+        ingredients: data.get("ingredients"),
+    };
+    function addFavoriteRecipe(recipe) {
+        const id = favorites.length + 1;
+        const newFavorite = { ...recipe, id };
+        favorites.push(newFavorite);
+        return newFavorite;
+    }
+
+    const newFavorite = addFavoriteRecipe(recipe);
+    id = newFavorite.id;
+}
+---
+
+<button hx-delete={`/recipes/favorites/${id}`} hx-swap="outerHTML">
+    <img src="/images/favorite.svg" alt="Remove favorite" />
+</button>

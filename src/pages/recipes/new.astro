@@ -1,0 +1,54 @@
+---
+export const partial = true;
+const recipe = {
+    title: "Lemon Chicken",
+    image: "/images/lemon-chicken.jpeg",
+    description: `Chicken breasts are dipped in beaten eggs and cracker crumbs, then baked with butter. These chicken breast are really tender and moist. Excellent flavor! I never have leftovers.`,
+    preptime: 15,
+    cooktime: 30,
+    servings: 4,
+    ingredients: [
+        "1/4 cup butter, melted",
+        "1/2 teaspoon garlic salt",
+        "1/2 teaspoon onion powder",
+        "6 tablespoons lemon juice",
+        "1 1/2 pounds skinless, boneless chicken breast halves",
+        "1 cup Italian seasoned bread crumbs",
+        "1/2 cup grated Parmesan cheese",
+        "1 teaspoon dried parsley",
+        "1 teaspoon ground black pepper",
+        "1 teaspoon garlic powder",
+    ],
+};
+---
+
+<img
+    src={recipe.image}
+    class="recipe-image"
+    alt="Chicken breasts are dipped in beaten eggs and cracker crumbs, then baked with butter"
+/>
+<article class="recipe-content">
+    <div class="recipe-header">
+        <h2 class="recipe-title">{recipe.title}</h2>
+        <button
+            hx-post="/recipes/favorites"
+            hx-swap="outerHTML"
+            hx-vals=`{"title":"${recipe.title}", "image":"${recipe.image}", "description":"${recipe.description}", "preptime":"${recipe.preptime}", "cooktime":"${recipe.cooktime}", "servings":"${recipe.servings}", "ingredients":"${recipe.ingredients}"}`
+        >
+            <img src="/images/add-favorite.svg" alt="Add favorite" />
+        </button>
+    </div>
+    <p class="recipe-description">{recipe.description}</p>
+    <p class="recipe-preptime">prep: {recipe.preptime} mins</p>
+    <p class="recipe-cooktime">cook: {recipe.cooktime} mins</p>
+    <p class="recipe-totaltime">total: 1 hr</p>
+    <p class="recipe-servings">servings: {recipe.servings}</p>
+    <h3>ingredients</h3>
+    <ul class="recipe-ingredients">
+        {
+            recipe.ingredients.map((i) => {
+                return <li>{i}</li>;
+            })
+        }
+    </ul>
+</article>

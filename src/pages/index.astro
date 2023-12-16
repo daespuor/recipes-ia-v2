@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <a href="/favorites">Favorites</a>
+    <section
+      class="recipe"
+      hx-get="recipes/new"
+      hx-trigger="load once delay:500ms"
+    >
+      <div class="hx-indicator">
+        <picture>
+          <source
+            srcset="/images/placeholder.webp"
+            type="image/webp"
+            alt="Loading"
+            class="recipe-image-placeholder"
+          />
+          <img
+            src="/images/placeholder.jpeg"
+            alt="Loading"
+            class="recipe-image-placeholder"
+          />
+        </picture>
+        <article class="recipe-content">
+          <h2 class="recipe-title">loading..</h2>
+          <p class="recipe-description">loading...</p>
+          <p class="recipe-preptime">loading...</p>
+          <p class="recipe-cooktime">loading...</p>
+          <p class="recipe-totaltime">loading...</p>
+          <p class="recipe-servings">loading...</p>
+          <h3>ingredients</h3>
+          <ul class="recipe-ingredients">
+            <li>loading...</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</Layout>
