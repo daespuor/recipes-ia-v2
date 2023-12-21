@@ -1,0 +1,135 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {
+  type RecipeType,
+  getFavoritesByTitle,
+  favorites,
+} from "../../lib/favorites";
+let currentFavorites = [] as RecipeType[];
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const search = data.get("search");
+  if (search) {
+    currentFavorites = getFavoritesByTitle(search.toString());
+  } else {
+    currentFavorites = favorites;
+  }
+}
+if (Astro.request.method === "GET") {
+  currentFavorites = favorites;
+}
+---
+
+<Layout title="My Favorites Recipes">
+  <main>
+    <header>
+      <h1>My Favorites Recipes</h1>
+    </header>
+    <form action="/favorites" method="post">
+      <input
+        type="search"
+        name="search"
+        placeholder="Search..."
+        hx-post="/favorites"
+        hx-trigger="keyup changed delay:500ms, search"
+        hx-target="next ul"
+        hx-swap="outerHTML"
+        hx-select="ul"
+        hx-indicator="#indicator"
+      />
+      <button type="submit">Search</button>
+      <span id="indicator" class="htmx-indicator">Loading...</span>
+    </form>
+    <ul>
+      {
+        currentFavorites.map((recipe) => (
+          <li>
+            <a href={`/favorites/${recipe.id}`}>
+              <div class="favorite-content">
+                <img src={recipe.image} alt={recipe.title} />
+                <div class="favorite-info">
+                  <h2>{recipe.title}</h2>
+                  <p>{recipe.description}</p>
+                  <span>{recipe.cooktime} min</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+  <style>
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .favorite-content {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      grid-gap: 1rem;
+    }
+
+    .favorite-content img {
+      width: 100px;
+      height: 100%;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
+
+    .favorite-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .favorite-info h2 {
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .favorite-info p {
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .favorite-info span {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    form {
+      margin-bottom: 1rem;
+
+      & input {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        margin-right: 0.5rem;
+      }
+
+      & button {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        background: #eee;
+      }
+    }
+  </style>
+</Layout>

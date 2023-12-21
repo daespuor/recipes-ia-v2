@@ -1,4 +1,5 @@
 ---
+import AddFavorite from "../../components/AddFavorite.astro";
 export const partial = true;
 const recipe = {
     title: "Lemon Chicken",
@@ -30,13 +31,7 @@ const recipe = {
 <article class="recipe-content">
     <div class="recipe-header">
         <h2 class="recipe-title">{recipe.title}</h2>
-        <button
-            hx-post="/recipes/favorites"
-            hx-swap="outerHTML"
-            hx-vals=`{"title":"${recipe.title}", "image":"${recipe.image}", "description":"${recipe.description}", "preptime":"${recipe.preptime}", "cooktime":"${recipe.cooktime}", "servings":"${recipe.servings}", "ingredients":"${recipe.ingredients}"}`
-        >
-            <img src="/images/add-favorite.svg" alt="Add favorite" />
-        </button>
+        <AddFavorite favorite={recipe} />
     </div>
     <p class="recipe-description">{recipe.description}</p>
     <p class="recipe-preptime">prep: {recipe.preptime} mins</p>

@@ -2,8 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Welcome to Random IA Recipes">
   <main>
+    <header>
+      <h1>IA Random Recipes</h1>
+    </header>
     <a href="/favorites">Favorites</a>
     <section
       class="recipe"
@@ -15,7 +18,6 @@ import Layout from "../layouts/Layout.astro";
           <source
             srcset="/images/placeholder.webp"
             type="image/webp"
-            alt="Loading"
             class="recipe-image-placeholder"
           />
           <img

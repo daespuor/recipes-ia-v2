@@ -1,0 +1,15 @@
+---
+import type { DraftRecipeType } from "../lib/favorites";
+interface Props {
+    favorite: DraftRecipeType;
+}
+const { favorite } = Astro.props;
+---
+
+<button
+    hx-post="/recipes/favorites"
+    hx-swap="outerHTML"
+    hx-vals={`"title":"${favorite.title}", "image":"${favorite.image}", "description":"${favorite.description}", "preptime":"${favorite.preptime}", "cooktime":"${favorite.cooktime}", "servings":"${favorite.servings}", "ingredients":"${favorite.ingredients}"`}
+>
+    <img src="/images/add-favorite.svg" alt="Add favorite" />
+</button>

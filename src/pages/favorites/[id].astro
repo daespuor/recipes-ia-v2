@@ -1,0 +1,17 @@
+---
+import AddFavorite from "../../../components/AddFavorite.astro";
+import { removeFavoriteRecipe, type RecipeType } from "../../../lib/favorites";
+
+export const partial = true;
+export const prerender = false;
+
+let favorite: RecipeType = {} as RecipeType;
+if (Astro.request.method == "DELETE") {
+    const { id } = Astro.params;
+    if (id) {
+        favorite = removeFavoriteRecipe(+id);
+    }
+}
+---
+
+<AddFavorite favorite={favorite} />

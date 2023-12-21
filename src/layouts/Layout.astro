@@ -9,7 +9,7 @@ const { title, description } = Astro.props;
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style>
+    <style is:global>
       *,
       ::before,
       ::after {
@@ -38,6 +38,10 @@ const { title, description } = Astro.props;
         padding: 1rem;
         max-width: 1200px;
         margin: 0 auto;
+        & p {
+          font-size: 1rem;
+          margin: 0.5rem;
+        }
 
         & .recipe {
           display: flex;
@@ -91,11 +95,6 @@ const { title, description } = Astro.props;
               font-weight: 700;
             }
           }
-
-          & p {
-            font-size: 1rem;
-            margin: 0.5rem;
-          }
         }
       }
     </style>
@@ -111,7 +110,7 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body hx-boost="true">
     <slot />
   </body>
 </html>

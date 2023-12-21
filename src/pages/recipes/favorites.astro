@@ -1,30 +1,25 @@
 ---
+import { addFavoriteRecipe } from "../../lib/favorites";
 export const partial = true;
-const favorites = [];
-let id;
+
+let id: number = 0;
 if (Astro.request.method == "POST") {
     const data = await Astro.request.formData();
-    const recipe = {
-        title: data.get("title"),
-        image: data.get("image"),
-        description: data.get("description"),
-        preptime: data.get("preptime"),
-        cookTime: data.get("cooktime"),
-        servings: data.get("servings"),
-        ingredients: data.get("ingredients"),
+    const newRecipe = {
+        title: data.get("title")?.toString() || "",
+        image: data.get("image")?.toString() || "",
+        description: data.get("description")?.toString() || "",
+        preptime: data.get("preptime")?.toString() || "",
+        cooktime: data.get("cooktime")?.toString() || "",
+        servings: data.get("servings")?.toString() || "",
+        ingredients: data.get("ingredients")?.toString().split(",") || [],
     };
-    function addFavoriteRecipe(recipe) {
-        const id = favorites.length + 1;
-        const newFavorite = { ...recipe, id };
-        favorites.push(newFavorite);
-        return newFavorite;
-    }
 
-    const newFavorite = addFavoriteRecipe(recipe);
+    const newFavorite = addFavoriteRecipe(newRecipe);
     id = newFavorite.id;
 }
 ---
 
 <button hx-delete={`/recipes/favorites/${id}`} hx-swap="outerHTML">
-    <img src="/images/favorite.svg" alt="Remove favorite" />
+    <img src="/images/favorite.svg" alt="Add favorite" />
 </button>
