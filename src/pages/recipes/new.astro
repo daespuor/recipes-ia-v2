@@ -1,5 +1,5 @@
 ---
-import AddFavorite from "../../components/AddFavorite.astro";
+import Recipe from "../../components/Recipe.astro";
 export const partial = true;
 const recipe = {
     title: "Lemon Chicken",
@@ -23,27 +23,4 @@ const recipe = {
 };
 ---
 
-<img
-    src={recipe.image}
-    class="recipe-image"
-    alt="Chicken breasts are dipped in beaten eggs and cracker crumbs, then baked with butter"
-/>
-<article class="recipe-content">
-    <div class="recipe-header">
-        <h2 class="recipe-title">{recipe.title}</h2>
-        <AddFavorite favorite={recipe} />
-    </div>
-    <p class="recipe-description">{recipe.description}</p>
-    <p class="recipe-preptime">prep: {recipe.preptime} mins</p>
-    <p class="recipe-cooktime">cook: {recipe.cooktime} mins</p>
-    <p class="recipe-totaltime">total: 1 hr</p>
-    <p class="recipe-servings">servings: {recipe.servings}</p>
-    <h3>ingredients</h3>
-    <ul class="recipe-ingredients">
-        {
-            recipe.ingredients.map((i) => {
-                return <li>{i}</li>;
-            })
-        }
-    </ul>
-</article>
+<Recipe recipe={recipe} shouldShowStar />

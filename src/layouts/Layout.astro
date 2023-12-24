@@ -42,60 +42,6 @@ const { title, description } = Astro.props;
           font-size: 1rem;
           margin: 0.5rem;
         }
-
-        & .recipe {
-          display: flex;
-          flex-direction: column;
-          padding: 1rem;
-          gap: 1rem;
-          text-align: left;
-          line-height: 1.5;
-
-          & .recipe-image-placeholder,
-          .recipe-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-          }
-
-          & .recipe-image-placeholder {
-            background-color: #eee;
-            position: relative;
-            opacity: 0.5;
-          }
-
-          & .recipe-image-placeholder::before {
-            content: "Loading...";
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            font-size: 3rem;
-            font-weight: bold;
-          }
-
-          & .recipe-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            & button {
-              background: transparent;
-              border: none;
-              padding: 0;
-              & img {
-                width: 50px;
-                height: 50px;
-              }
-            }
-            & button:hover {
-              cursor: pointer;
-            }
-            & .recipe-title {
-              font-size: 1.5rem;
-              font-weight: 700;
-            }
-          }
-        }
       }
     </style>
     <meta charset="UTF-8" />
@@ -110,7 +56,7 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body hx-boost="true">
+  <body >
     <slot />
   </body>
 </html>

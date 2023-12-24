@@ -2,9 +2,9 @@ export type DraftRecipeType = {
   title: string;
   image: string;
   description: string;
-  preptime: string;
-  cooktime: string;
-  servings: string;
+  preptime: string | number;
+  cooktime: string | number;
+  servings: string | number;
   ingredients: string[];
 };
 

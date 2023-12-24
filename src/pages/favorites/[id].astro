@@ -1,17 +1,21 @@
 ---
-import AddFavorite from "../../../components/AddFavorite.astro";
-import { removeFavoriteRecipe, type RecipeType } from "../../../lib/favorites";
-
-export const partial = true;
+import Recipe from "../../components/Recipe.astro";
+import Layout from "../../layouts/Layout.astro";
+import { type RecipeType, getFavoriteRecipe } from "../../lib/favorites";
 export const prerender = false;
-
-let favorite: RecipeType = {} as RecipeType;
-if (Astro.request.method == "DELETE") {
-    const { id } = Astro.params;
-    if (id) {
-        favorite = removeFavoriteRecipe(+id);
-    }
+let recipe = {} as RecipeType;
+if (Astro.request.method === "GET") {
+  const { id } = Astro.params;
+  recipe = getFavoriteRecipe(+id) || ({} as RecipeType);
 }
 ---
 
-<AddFavorite favorite={favorite} />
+<Layout title={`Favorite ${recipe.id}`}>
+  <main>
+    <header>
+      <h1>Favorite {recipe.id}</h1>
+    </header>
+    <a href="/favorites">Favorites</a>
+    <Recipe recipe={recipe} />
+  </main>
+</Layout>

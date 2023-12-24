@@ -20,6 +20,6 @@ if (Astro.request.method == "POST") {
 }
 ---
 
-<button hx-delete={`/recipes/favorites/${id}`} hx-swap="outerHTML">
+<button hx-delete={`/recipes/${id}`} hx-swap="outerHTML">
     <img src="/images/favorite.svg" alt="Add favorite" />
 </button>

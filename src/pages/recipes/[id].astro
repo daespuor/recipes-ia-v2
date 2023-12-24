@@ -1,44 +1,18 @@
+
 ---
-import Layout from "../../layouts/Layout.astro";
-import { type RecipeType, getFavoriteRecipe } from "../../lib/favorites";
+import AddFavorite from "../../components/AddFavorite.astro";
+import { removeFavoriteRecipe, type RecipeType } from "../../lib/favorites";
+
+export const partial = true;
 export const prerender = false;
-let recipe = {} as RecipeType;
-if (Astro.request.method === "GET") {
-  const { id } = Astro.params;
-  recipe = getFavoriteRecipe(+id) || ({} as RecipeType);
+
+let favorite: RecipeType = {} as RecipeType;
+if (Astro.request.method == "DELETE") {
+    const { id } = Astro.params;
+    if (id) {
+        favorite = removeFavoriteRecipe(+id);
+    }
 }
 ---
 
-<Layout title={`Favorite ${recipe.id}`}>
-  <main>
-    <header>
-      <h1>Favorite {recipe.id}</h1>
-    </header>
-    <a href="/favorites">Favorites</a>
-    <section>
-      <img
-        src={recipe.image}
-        class="recipe-image"
-        alt="Chicken breasts are dipped in beaten eggs and cracker crumbs, then baked with butter"
-      />
-      <article class="recipe-content">
-        <div class="recipe-header">
-          <h2 class="recipe-title">{recipe.title}</h2>
-        </div>
-        <p class="recipe-description">{recipe.description}</p>
-        <p class="recipe-preptime">prep: {recipe.preptime} mins</p>
-        <p class="recipe-cooktime">cook: {recipe.cooktime} mins</p>
-        <p class="recipe-totaltime">total: 1 hr</p>
-        <p class="recipe-servings">servings: {recipe.servings}</p>
-        <h3>ingredients</h3>
-        <ul class="recipe-ingredients">
-          {
-            recipe.ingredients.map((i) => {
-              return <li>{i}</li>;
-            })
-          }
-        </ul>
-      </article>
-    </section>
-  </main>
-</Layout>
+<AddFavorite favorite={favorite} />

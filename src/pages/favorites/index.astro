@@ -25,6 +25,7 @@ if (Astro.request.method === "GET") {
     <header>
       <h1>My Favorites Recipes</h1>
     </header>
+    <a href="/">Back to Home</a>
     <form action="/favorites" method="post">
       <input
         type="search"
@@ -72,14 +73,20 @@ if (Astro.request.method === "GET") {
       margin: 0;
     }
 
-    li {
+    main > a {
       margin-bottom: 1rem;
     }
 
-    a {
+    li {
+      margin-bottom: 1rem;
+      
+     & a {
       text-decoration: none;
       color: inherit;
+     }
+
     }
+
 
     .favorite-content {
       display: grid;

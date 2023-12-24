@@ -1,0 +1,128 @@
+---
+import { type DraftRecipeType } from "../lib/favorites";
+import AddFavorite from "./AddFavorite.astro";
+type Props = {
+    recipe?: DraftRecipeType;
+    shouldShowStar?: boolean;
+};
+
+const { recipe, shouldShowStar } = Astro.props;
+---
+
+{
+    recipe ? (
+        <section class="recipe">
+            <img
+                src={recipe.image}
+                class="recipe-image"
+                alt="Chicken breasts are dipped in beaten eggs and cracker crumbs, then baked with butter"
+            />
+            <article class="recipe-content">
+                <div class="recipe-header">
+                    <h2 class="recipe-title">{recipe.title}</h2>
+                    {shouldShowStar && <AddFavorite favorite={recipe} />}
+                </div>
+                <p class="recipe-description">{recipe.description}</p>
+                <p class="recipe-preptime">prep: {recipe.preptime} mins</p>
+                <p class="recipe-cooktime">cook: {recipe.cooktime} mins</p>
+                <p class="recipe-totaltime">total: 1 hr</p>
+                <p class="recipe-servings">servings: {recipe.servings}</p>
+                <h3>ingredients</h3>
+                <ul class="recipe-ingredients">
+                    {recipe.ingredients.map((i) => {
+                        return <li>{i}</li>;
+                    })}
+                </ul>
+            </article>
+        </section>
+    ) : (
+        <section
+            class="recipe"
+            hx-get="recipes/new"
+            hx-swap="outerHTML"
+            hx-trigger="load once delay:500ms"
+        >
+            <div class="hx-indicator">
+                <picture>
+                    <source
+                        srcset="/images/placeholder.webp"
+                        type="image/webp"
+                        class="recipe-image-placeholder"
+                    />
+                    <img
+                        src="/images/placeholder.jpeg"
+                        alt="Loading"
+                        class="recipe-image-placeholder"
+                    />
+                </picture>
+                <article class="recipe-content">
+                    <h2 class="recipe-title">loading..</h2>
+                    <p class="recipe-description">loading...</p>
+                    <p class="recipe-preptime">loading...</p>
+                    <p class="recipe-cooktime">loading...</p>
+                    <p class="recipe-totaltime">loading...</p>
+                    <p class="recipe-servings">loading...</p>
+                    <h3>ingredients</h3>
+                    <ul class="recipe-ingredients">
+                        <li>loading...</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    )
+}
+<style>
+    .recipe {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        text-align: left;
+        line-height: 1.5;
+
+        .recipe-image-placeholder,
+        .recipe-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .recipe-image-placeholder {
+            background-color: #eee;
+            position: relative;
+            opacity: 0.5;
+        }
+
+        .recipe-image-placeholder::before {
+            content: "Loading...";
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .recipe-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            & button {
+                background: transparent;
+                border: none;
+                padding: 0;
+                & img {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+            & button:hover {
+                cursor: pointer;
+            }
+            & .recipe-title {
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+    }
+</style>
